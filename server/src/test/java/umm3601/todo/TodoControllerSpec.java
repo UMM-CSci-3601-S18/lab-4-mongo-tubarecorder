@@ -108,5 +108,15 @@ public class TodoControllerSpec {
         assertEquals("Names should match", expectedOwner, owners);
     }
 
+    @Test
+    public void getTodoByIdTest() {
+        Map<String, String[]> emptyMap = new HashMap<>();
+        String jsonResult = todoController.getTodo(emptyMap);
+        Document samInfo = Document.parse(jsonResult);
+
+        assertEquals("Owner names should match", "Sam", samInfo.get("owner"));
+        String noJsonResult = todoController.getTodo(new ObjectId().toString());
+        assertNull("No name should match",noJsonResult);
+    }
 
 }

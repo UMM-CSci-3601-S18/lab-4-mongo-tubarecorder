@@ -28,6 +28,18 @@ public class TodoController {
     public String getTodos(Map<String, String[]> queryParams) {
         Document filterDoc = new Document();
 
+        if (queryParams.containsKey("owner")) {
+            String targetOwner = queryParams.get("owner")[0];
+            filterDoc = filterDoc.append("owner", targetOwner);
+        }
+
+        if (queryParams.containsKey("body")) {
+            String targetContent = (queryParams.get("body")[0]);
+            Document contentRegQuery = new Document();
+            contentRegQuery.append("$regex", targetContent);
+            contentRegQuery.append("$options", "i");
+            filterDoc = filterDoc.append("body", contentRegQuery);
+        }
 
         FindIterable<Document> mathchingTodos = todoCollection.find(filterDoc);
 

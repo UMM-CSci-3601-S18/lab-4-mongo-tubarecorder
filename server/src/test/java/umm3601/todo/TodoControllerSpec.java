@@ -92,6 +92,11 @@ public class TodoControllerSpec {
         return ((BsonString) doc.get("owner")).getValue();
     }
 
+    private static String getStatus(BsonValue val) {
+        BsonDocument doc = val.asDocument();
+        return ((BsonString) doc.get("status")).getValue();
+    }
+
     @Test
     public void getAllTodos() {
         Map<String, String[]> emptyMap = new HashMap<>();
@@ -117,6 +122,41 @@ public class TodoControllerSpec {
         assertEquals("Owner names should match", "Sam", samInfo.get("owner"));
         String noJsonResult = todoController.getTodo(new ObjectId().toString());
         assertNull("No name should match",noJsonResult);
+    }
+
+    @Test
+    public void getTodosByOwner() {
+        Map<String, String[]> ownerMap = new HashMap<>();
+        ownerMap.put("owner", new String[] { "Chris" });
+        String jsonResult = todoController.getTodos(ownerMap);
+        BsonArray docs = parseJsonArray(jsonResult);
+
+        assertEquals("Should be 1 todo", 1, docs.size());
+        List<String> owners = docs
+            .stream()
+            .map(TodoControllerSpec::getOwner)
+            .sorted()
+            .collect(Collectors.toList());
+        List<String> expectedOwner = Arrays.asList("Chris");
+        assertEquals("Names should match", expectedOwner, owners);
+    }
+
+
+    @Test
+    public void getTodosByBody() {
+        Map<String, String[]> bodyMap = new HashMap<>();
+        bodyMap.put("body", new String[] { "add" });
+        String jsonResult = todoController.getTodos(bodyMap);
+        BsonArray docs = parseJsonArray(jsonResult);
+
+        assertEquals("Should be 1 todo", 1, docs.size());
+        List<String> owners = docs
+            .stream()
+            .map(TodoControllerSpec::getOwner)
+            .sorted()
+            .collect(Collectors.toList());
+        List<String> expectedOwner = Arrays.asList("Chris");
+        assertEquals("Names should match", expectedOwner, owners);
     }
 
 }

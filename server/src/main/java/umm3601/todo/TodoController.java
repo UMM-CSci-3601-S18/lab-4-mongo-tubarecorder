@@ -33,4 +33,19 @@ public class TodoController {
 
         return JSON.serialize(mathchingTodos);
     }
+
+    public String getTodo(String id) {
+        FindIterable<Document> jsonTodos
+            = todoCollection
+            .find(eq("_id", new ObjectId(id)));
+
+        Iterator<Document> iterator = jsonTodos.iterator();
+        if (iterator.hasNext()) {
+            Document todo = iterator.next();
+            return todo.toJson();
+        } else {
+            // We didn't find the desired user
+            return null;
+        }
+    }
 }

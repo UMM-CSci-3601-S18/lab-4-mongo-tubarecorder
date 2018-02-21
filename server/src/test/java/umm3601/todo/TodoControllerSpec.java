@@ -110,8 +110,8 @@ public class TodoControllerSpec {
 
     @Test
     public void getTodoByIdTest() {
-        Map<String, String[]> emptyMap = new HashMap<>();
-        String jsonResult = todoController.getTodo(emptyMap);
+        String SamID = samsId.toHexString();
+        String jsonResult = todoController.getTodo(SamID);
         Document samInfo = Document.parse(jsonResult);
 
         assertEquals("Owner names should match", "Sam", samInfo.get("owner"));

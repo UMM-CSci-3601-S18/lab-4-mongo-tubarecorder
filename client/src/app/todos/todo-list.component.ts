@@ -37,7 +37,7 @@ export class TodoListComponent implements OnInit {
 
         this.filteredTodos = this.todos;
 
-        //Filter by category
+        // Filter by category
         if (searchCategory != null) {
             searchCategory = searchCategory.toLocaleLowerCase();
 
@@ -46,12 +46,17 @@ export class TodoListComponent implements OnInit {
             });
         }
 
-        //Filter by status
+        // Filter by status
         if (searchStatus != null) {
             searchStatus = searchStatus.toLocaleLowerCase();
 
             this.filteredTodos = this.filteredTodos.filter(todo => {
-                return !searchStatus || todo.status.toLowerCase().indexOf(searchStatus) !== -1;
+                if (todo.status) {
+                    return searchStatus === 'true';
+                } else if (!todo.status) {
+                    return searchStatus === 'false';
+                }
+                return !searchStatus;
             });
         }
 

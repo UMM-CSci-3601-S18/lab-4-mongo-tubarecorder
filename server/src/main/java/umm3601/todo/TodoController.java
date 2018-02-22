@@ -56,9 +56,9 @@ public class TodoController {
             Document todo = iterator.next();
             return todo.toJson();
         } else {
-            // We didn't find the desired user
+            // We didn't find the desired todo
             return null;
         }
     }
 }
-//This is here so we can commit
+

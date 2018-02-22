@@ -91,6 +91,7 @@ export class TodoListComponent implements OnInit {
         this.loadReady = true;
         this.todoListService.getTodos(this.todoOwner, this.todoBody).subscribe(
             todos => {
+                console.log("it went through here")
                 this.todos = todos;
                 this.filteredTodos = this.todos;
             },

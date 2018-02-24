@@ -2,6 +2,7 @@ package umm3601.todo;
 
 import com.google.gson.Gson;
 import com.mongodb.*;
+import com.mongodb.client.DistinctIterable;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -68,26 +69,89 @@ public class TodoController {
         Document filterDoc = new Document();
         filterDoc = filterDoc.append("status", true);
 
-        Document summary = null;
+        List<Document> summary = new ArrayList<>();
         Document categoriesSummary = null;
         Document ownersSummary = null;
 
-        float percentToDosComplete = todoCollection.count(filterDoc)/todoCollection.count();
-        summary.append("percentTodosComplete", percentToDosComplete);
-        
+        // overall todos complete
+        float TodosComplete = todoCollection.count(filterDoc);
+        float TodosTotal = todoCollection.count();
+        summary.add(Document.parse("{ percentTodosComplete: " + (TodosComplete/TodosTotal) + "}"));
+        //summary.add(Document.parse("{\n" +
+        //    "                    percentTodosComplete:" + percentToDosComplete + "}"));
 
+
+        // todos complete by owner and category
+        //ownersSummary = percentComplete("owner");
+        //categoriesSummary = percentComplete("category");
+
+/*
+        DistinctIterable<Document> ownerNames = todoCollection.distinct("owner",Document.class);
+
+        String ownerName;
+        float ownerPercent;
+        float ownerTotal;
+        float ownerComplete;
+        for(Document ownerDoc : ownerNames){
+            filterDoc = new Document();
+            ownerName = ownerDoc.get("owner").toString();
+            filterDoc.append("owner", ownerName);
+
+            ownerTotal = todoCollection.count(filterDoc);
+
+            filterDoc.append("status", true);
+            ownerComplete = todoCollection.count(filterDoc);
+
+            ownerPercent = ownerComplete/ownerTotal;
+
+            ownersSummary.put(ownerName, ownerPercent);
+        }
+        */
+
+        /*
         List<Document> testTodos = new ArrayList<>();
+
         testTodos.add(Document.parse("{\n" +
             "                    owner: \"Chris\",\n" +
             "                    status: false,\n" +
             "                    category: \"homework\",\n" +
             "                    body: \"add an underscore to make that error you had for a whole day go away\"\n" +
             "                }"));
-        FindIterable<Document> mathchingTodos = todoCollection.find();
+            */
 
-        summary.append("categoriesPercentComplete", categoriesSummary);
-        summary.append("ownersPercentComplete", ownersSummary);
+        //summary.append("categoriesPercentComplete", categoriesSummary);
+        //summary.append("ownersPercentComplete", ownersSummary);
+
+
         return JSON.serialize(summary);
+        //return summary.toJson();
+    }
+
+    public Document percentComplete(String fieldName){
+        Document returnSummary = null;
+        Document filterDoc = new Document();
+        DistinctIterable<String> Names = todoCollection.distinct(fieldName,String.class);
+
+        String Name;
+        float Percent;
+        float Total;
+        float Complete;
+        for(String Doc : Names){
+            filterDoc = new Document();
+            Name = "Fry";
+            filterDoc.append(fieldName, Name);
+
+            Total = todoCollection.count(filterDoc);
+
+            filterDoc.append("status", true);
+            Complete = todoCollection.count(filterDoc);
+
+            Percent = Complete/Total;
+
+            returnSummary.put(Name, Percent);
+        }
+
+        return returnSummary;
     }
 }
 

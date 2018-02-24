@@ -17,8 +17,8 @@ export class TodoListComponent implements OnInit {
 
     public todoCategory : string;
     public todoStatus : string;
-    public todoOwner : string;
-    public todoBody : string;
+    public todoOwner : string = "";
+    public todoBody : string = "";
     public todoID : string;
 
     public loadReady: boolean = false;

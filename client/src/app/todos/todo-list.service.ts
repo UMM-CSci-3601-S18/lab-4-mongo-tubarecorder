@@ -19,13 +19,13 @@ export class TodoListService {
     getTodos(todoOwner : string, todoBody : string): Observable<Todo[]> {
         this.todoUrl = this.baseUrl;
 
-        /*
+
         if(todoOwner !== "" && todoOwner !== null){
             this.todoUrl = this.todoUrl + "?owner=" + todoOwner;
             this.filtered = true;
         }
-        */
-        /*
+
+
         if(todoBody != ""){
             if(this.filtered){
                 this.todoUrl = this.todoUrl + "&body=" + todoBody;
@@ -33,7 +33,7 @@ export class TodoListService {
                 this.todoUrl = this.todoUrl + "?body=" + todoBody;
             }
         }
-*/
+
         this.filtered = false;
         return this.http.get<Todo[]>(this.todoUrl);
     }

@@ -67,4 +67,10 @@ public class TodoRequestHandler {
         return todoController.getTodos(req.queryMap().toMap());
     }
 
+    public String getTodoSummary(Request req, Response res)
+    {
+        res.type("application/json");
+        return todoController.getTodoSummary();
+    }
+
 }

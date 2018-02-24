@@ -8,7 +8,10 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.util.JSON;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import static com.mongodb.client.model.Filters.eq;
@@ -59,6 +62,32 @@ public class TodoController {
             // We didn't find the desired todo
             return null;
         }
+    }
+
+    public String getTodoSummary() {
+        Document filterDoc = new Document();
+        filterDoc = filterDoc.append("status", true);
+
+        Document summary = null;
+        Document categoriesSummary = null;
+        Document ownersSummary = null;
+
+        float percentToDosComplete = todoCollection.count(filterDoc)/todoCollection.count();
+        summary.append("percentTodosComplete", percentToDosComplete);
+        
+
+        List<Document> testTodos = new ArrayList<>();
+        testTodos.add(Document.parse("{\n" +
+            "                    owner: \"Chris\",\n" +
+            "                    status: false,\n" +
+            "                    category: \"homework\",\n" +
+            "                    body: \"add an underscore to make that error you had for a whole day go away\"\n" +
+            "                }"));
+        FindIterable<Document> mathchingTodos = todoCollection.find();
+
+        summary.append("categoriesPercentComplete", categoriesSummary);
+        summary.append("ownersPercentComplete", ownersSummary);
+        return JSON.serialize(summary);
     }
 }
 

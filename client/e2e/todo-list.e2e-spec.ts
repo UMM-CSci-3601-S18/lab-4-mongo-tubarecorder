@@ -16,11 +16,10 @@ describe('Todo List', () => {
         expect(page.getTodoTitle()).toEqual('Todos');
     })
 
-    /*
+
     it('Should type in the Search by Owner field and filter the todos', () =>{
         page.navigateTo();
-        page.typeAnOwner('Barry');
+        page.searchByOwner('Barry');
         expect(element.all(by.className('todos')).first().getText()).toContain('Barry');
     })
-    */
 });

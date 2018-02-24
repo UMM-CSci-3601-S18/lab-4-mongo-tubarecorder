@@ -25,10 +25,14 @@ export class TodoPage{
         return title;
     }
 
-    typeAnOwner(owner: string) {
+    searchByOwner(owner: string) {
         const input = element(by.id('todoOwner'));
+        const submit = element(by.id('submitSearch'));
+
         input.click();
-        input.sendKeys('owner');
+        input.sendKeys(owner);
+
+        submit.click();
     }
 
 }

@@ -22,17 +22,18 @@
 
                 Filter by Status:
                 <div>
-                    <input type="radio" id="statusOption1"
-                           name="contact" (input)="todoStatus = null">
-                    <label for="statusOption1">All</label>
+                    <input type="radio" id="statusAll"
+                           name="status" (input)="todoStatus = null">
+                    <label for="statusAll">All</label>
 
-                    <input type="radio" id="statusOption2"
-                           name="contact" (input)="todoStatus ='true'">
-                    <label for="statusOption2">True</label>
+                    <input type="radio" id="statusComplete"
+                           name="status" (input)="todoStatus ='true'">
+                    <label for="statusComplete">Complete</label>
 
-                    <input type="radio" id="statusOption3"
-                           name="contact" (input)="todoStatus ='false'">
-                    <label for="statusOption3">False</label>
+                    <input type="radio" id="statusIncomplete"
+                           name="status" (input)="todoStatus ='false'">
+                    <label for="statusIncomplete">Incomplete</label>
+                    <button type="button" id="submitStatus" (click)="loadService()">Submit</button>
                 </div>
                 <br>
                 <mat-form-field>
@@ -41,16 +42,16 @@
 
 
                 <mat-accordion *ngIf="todos; else todosError" >
-                <mat-expansion-panel #elem class="todos" [id]="todo._id['$oid']" *ngFor="let todo of this.filterTodos(todoCategory, todoStatus)">
+                <mat-expansion-panel #elem class="todos" #elem [id]="todo._id['$oid']" *ngFor="let todo of this.filterTodos(todoCategory, todoStatus)">
                     <mat-expansion-panel-header>
-                        <mat-panel-title  matTooltip="status: {{todo.status}}" >{{todo.owner}}: {{todo._id['$oid']}}</mat-panel-title>
+                        <mat-panel-title  matTooltip="Status: {{todo.status}}" >{{todo.owner}}: {{todo._id['$oid']}}</mat-panel-title>
 
                     </mat-expansion-panel-header>
-                    <mat-panel-description>Owner: {{todo.owner}}</mat-panel-description>
-                    <mat-panel-description>ID: {{todo._id['$oid']}}</mat-panel-description>
-                    <mat-panel-description >Status: {{todo.status}}</mat-panel-description>
-                     <mat-panel-description>Category: {{todo.category}}</mat-panel-description>
-                    <mat-panel-description>Body: {{todo.body}}</mat-panel-description>
+                    <mat-panel-description class="owner">Owner: {{todo.owner}}</mat-panel-description>
+                    <mat-panel-description class="id">ID: {{todo._id['$oid']}}</mat-panel-description>
+                    <mat-panel-description class="status">Status: {{todo.status}}</mat-panel-description>
+                     <mat-panel-description class="categoryDisplay">Category: {{todo.category}}</mat-panel-description>
+                    <mat-panel-description class="bodyDisplay">Body: {{todo.body}}</mat-panel-description>
 
                 </mat-expansion-panel>
                 </mat-accordion>

@@ -35,4 +35,38 @@ export class TodoPage{
         submit.click();
     }
 
+
+
+    filterByAndGetBody(body: string) {
+        let input = element(by.id('todoBody'));
+        let submit = element(by.id('submitSearch'));
+        input.click();
+        input.sendKeys(body);
+        submit.click();
+
+        let el = element.all(by.css('.bodyDisplay')).first();
+        let container = element.all(by.css('.todos')).first();
+        container.click();
+        let result = el.getText();
+        return result;
+    }
+
+    searchByStatusComplete() {
+        const input = element(by.id('statusComplete'));
+        const submit = element(by.id('submitStatus'));
+
+        input.click;
+        submit.click;
+    }
+
+    /*
+    getStatus(status: string): boolean {
+        let el = element.all(by.css('.status')).first();
+        let container = element.all(by.css('.todos')).first;
+        container().click();
+        let result = el.getText();
+        return result.toContain(status);
+    }
+    */
+
 }

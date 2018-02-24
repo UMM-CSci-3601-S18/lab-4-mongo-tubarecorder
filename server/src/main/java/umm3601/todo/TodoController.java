@@ -69,20 +69,23 @@ public class TodoController {
         Document filterDoc = new Document();
         filterDoc = filterDoc.append("status", true);
 
-        Document summary = null;
+        List<Document> summary = new ArrayList<>();
         Document categoriesSummary = null;
         Document ownersSummary = null;
 
         // overall todos complete
-        float percentToDosComplete = todoCollection.count(filterDoc)/todoCollection.count();
-        summary.put("hi", "bye");
-        //summary.put("percentTodosComplete", percentToDosComplete);
+        float TodosComplete = todoCollection.count(filterDoc);
+        float TodosTotal = todoCollection.count();
+        summary.add(Document.parse("{ percentTodosComplete: " + (TodosComplete/TodosTotal) + "}"));
+        //summary.add(Document.parse("{\n" +
+        //    "                    percentTodosComplete:" + percentToDosComplete + "}"));
+
 
         // todos complete by owner and category
         //ownersSummary = percentComplete("owner");
         //categoriesSummary = percentComplete("category");
 
-        /*
+/*
         DistinctIterable<Document> ownerNames = todoCollection.distinct("owner",Document.class);
 
         String ownerName;
@@ -118,7 +121,10 @@ public class TodoController {
 
         //summary.append("categoriesPercentComplete", categoriesSummary);
         //summary.append("ownersPercentComplete", ownersSummary);
-        return summary.toJson();
+
+
+        return JSON.serialize(summary);
+        //return summary.toJson();
     }
 
     public Document percentComplete(String fieldName){

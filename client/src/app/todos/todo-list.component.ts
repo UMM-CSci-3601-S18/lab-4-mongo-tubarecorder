@@ -48,15 +48,13 @@ export class TodoListComponent implements OnInit {
 
         // Filter by status
         if (searchStatus != null) {
-            searchStatus = searchStatus.toLocaleLowerCase();
 
             this.filteredTodos = this.filteredTodos.filter(todo => {
                 if (todo.status) {
-                    return searchStatus === 'true';
+                    return searchStatus === "true";
                 } else if (!todo.status) {
-                    return searchStatus === 'false';
+                    return searchStatus === "false";
                 }
-                return !searchStatus;
             });
         }
 
@@ -91,7 +89,7 @@ export class TodoListComponent implements OnInit {
         this.loadReady = true;
         this.todoListService.getTodos(this.todoOwner, this.todoBody).subscribe(
             todos => {
-                console.log("it went through here")
+                console.log("it went through here");
                 this.todos = todos;
                 this.filteredTodos = this.todos;
             },

@@ -19,9 +19,22 @@
                 </mat-form-field>
                 <button type="button" id="2" (click)="loadService()"> Search </button>
                 <br>
-                <mat-form-field>
-                    <input matInput id="todoStatus" #input type="text" placeholder="Filter by Status" (input)="todoStatus = $event.target.value">
-                </mat-form-field>
+
+                Filter by Status:
+                <div>
+                    <input type="radio" id="statusOption1"
+                           name="contact" (input)="todoStatus = null">
+                    <label for="statusOption1">All</label>
+
+                    <input type="radio" id="statusOption2"
+                           name="contact" (input)="todoStatus ='true'">
+                    <label for="statusOption2">True</label>
+
+                    <input type="radio" id="statusOption3"
+                           name="contact" (input)="todoStatus ='false'">
+                    <label for="statusOption3">False</label>
+                </div>
+                <br>
                 <mat-form-field>
                     <input matInput id="todoCategory" #input type="text" placeholder="Filter by Category" (input)="todoCategory = $event.target.value">
                 </mat-form-field>

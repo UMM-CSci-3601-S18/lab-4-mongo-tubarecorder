@@ -73,4 +73,44 @@ public class TodoRequestHandler {
         return todoController.getTodoSummary();
     }
 
+    public String addNewTodo(Request req, Response res)
+    {
+
+        res.type("application/json");
+        Object o = JSON.parse(req.body());
+        try {
+            if(o.getClass().equals(BasicDBObject.class))
+            {
+                try {
+                    BasicDBObject dbO = (BasicDBObject) o;
+
+                    String owner = dbO.getString("owner");
+                    //For some reason age is a string right now, caused by angular.
+                    //This is a problem and should not be this way but here ya go
+                    String category = dbO.getString("category");
+                    String body = dbO.getString("body");
+
+                    System.out.println("Adding new todo [owner=" + owner + ", status=" + "false" + " category=" + category + ']');
+                    return todoController.addNewTodo(owner, category, body).toString();
+                }
+                catch(NullPointerException e)
+                {
+                    System.err.println("A value was malformed or omitted, new user request failed.");
+                    return null;
+                }
+
+            }
+            else
+            {
+                System.err.println("Expected BasicDBObject, received " + o.getClass());
+                return null;
+            }
+        }
+        catch(RuntimeException ree)
+        {
+            ree.printStackTrace();
+            return null;
+        }
+    }
+
 }

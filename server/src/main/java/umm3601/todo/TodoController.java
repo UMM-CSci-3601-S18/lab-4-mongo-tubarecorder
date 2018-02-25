@@ -117,5 +117,25 @@ public class TodoController {
 
         return returnSummary;
     }
+
+    public String addNewTodo(String owner, String category, String body) {
+
+        Document newUser = new Document();
+        newUser.append("owner", owner);
+        newUser.append("status", false);
+        newUser.append("category", category);
+        newUser.append("body", body);
+
+        try {
+            todoCollection.insertOne(newUser);
+            ObjectId id = newUser.getObjectId("_id");
+            System.err.println("Successfully added new user [_id=" + id + ", owner=" + owner + ", category=" + category + " body=" + body + ']');
+            // return JSON.serialize(newUser);
+            return JSON.serialize(id);
+        } catch(MongoException me) {
+            me.printStackTrace();
+            return null;
+        }
+    }
 }
 

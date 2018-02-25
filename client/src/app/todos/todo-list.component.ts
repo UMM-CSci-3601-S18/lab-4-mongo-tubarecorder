@@ -3,6 +3,7 @@ import {TodoListService} from "./todo-list.service";
 import {Todo} from "./todo";
 import {Observable} from "rxjs";
 import {MatDialog} from '@angular/material';
+import {AddTodoComponent} from './add-todo.component';
 
 @Component({
     selector: 'user-list-component',
@@ -97,6 +98,27 @@ export class TodoListComponent implements OnInit {
                 console.log(err);
             }
         );
+    }
+
+    openDialog(): void {
+        const newTodo: Todo = {_id: '', owner: '', status: false, category: '', body: ''};
+        const dialogRef = this.dialog.open(AddTodoComponent, {
+            width: '500px',
+            data: { todo: newTodo }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            this.todoListService.addNewTodo(result).subscribe(
+                result => {
+                    // this.highlightedID = result;
+                    this.refreshTodos();
+                },
+                err => {
+
+                    console.log('There was an error adding the todo.');
+                    console.log('The error was ' + JSON.stringify(err));
+                });
+        });
     }
 
 

@@ -26,25 +26,24 @@
                     <mat-divider></mat-divider>
                     <br>
 
-                    <h3>Filter:</h3>
-                    Filter by Status:
-                    <div>
-                        <input type="radio" id="statusAll"
-                               name="status" (input)="todoStatus = null">
-                        <label for="statusAll">All</label>
+                Filter by Status:
+                <div>
+                    <input type="radio" id="statusAll"
+                           name="contact" (input)="todoStatus = null">
+                    <label for="statusAll">All</label>
 
-                        <input type="radio" id="statusComplete"
-                               name="status" (input)="todoStatus ='true'">
-                        <label for="statusComplete">Complete</label>
+                    <input type="radio" id="statusComplete"
+                           name="contact" (input)="todoStatus ='true'">
+                    <label for="statusComplete">True</label>
 
-                        <input type="radio" id="statusIncomplete"
-                               name="status" (input)="todoStatus ='false'">
-                        <label for="statusIncomplete">Incomplete</label>
-                    </div>
-                    <br>
-                    <mat-form-field>
-                        <input matInput id="todoCategory" #input type="text" placeholder="Filter by Category" (input)="todoCategory = $event.target.value">
-                    </mat-form-field>
+                    <input type="radio" id="statusIncomplete"
+                           name="contact" (input)="todoStatus ='false'">
+                    <label for="statusIncomplete">False</label>
+                </div>
+                <br>
+                <mat-form-field>
+                    <input matInput id="todoCategory" #input type="text" placeholder="Filter by Category" (input)="todoCategory = $event.target.value">
+                </mat-form-field>
 
                     <mat-divider></mat-divider>
                         <br>

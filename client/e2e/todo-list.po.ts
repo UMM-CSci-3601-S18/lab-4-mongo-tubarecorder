@@ -51,22 +51,39 @@ export class TodoPage{
         return result;
     }
 
-    searchByStatusComplete() {
-        const input = element(by.id('statusComplete'));
-        const submit = element(by.id('submitStatus'));
+    filterByAndGetStatusComplete() {
+        let input = element(by.id('statusComplete'));
+        input.click();
 
-        input.click;
-        submit.click;
-    }
-
-    /*
-    getStatus(status: string): boolean {
         let el = element.all(by.css('.status')).first();
-        let container = element.all(by.css('.todos')).first;
-        container().click();
-        let result = el.getText();
-        return result.toContain(status);
+        let container = element.all(by.css('.todos')).first();
+        container.click();
+        return el.getText();
     }
-    */
 
+    filterByAndGetCategory(category: string) {
+        let input = element(by.id('todoCategory'));
+        input.click();
+        input.sendKeys(category);
+
+        let container = element.all(by.css('.todos')).first();
+        container.click();
+        return container.getText();
+    }
+
+    addTodo(owner: string, category: string, body: string) {
+        let ownerInput = element(by.id('ownerField'));
+        let categoryInput = element(by.id('categoryField'));
+        let bodyInput = element(by.id('bodyField'));
+        let submit = element(by.id('confirmAddTodoButton'));
+
+        ownerInput.click();
+        ownerInput.sendKeys(owner);
+        categoryInput.click();
+        categoryInput.sendKeys(category);
+        bodyInput.click()
+        bodyInput.sendKeys(body);
+
+        submit.click();
+    }
 }

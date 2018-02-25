@@ -28,11 +28,32 @@ describe('Todo List', () => {
         expect(page.filterByAndGetBody('commodo')).toContain('commodo');
     });
 
+
     /*
     it('Should select Complete for Status and filter the todos by completion status', () =>{
         page.navigateTo();
-        page.searchByStatusComplete;
-        expect(page.getStatus("true") === true);
-    })
+        expect(page.filterByAndGetStatusComplete()).toContain('true');
+    });
     */
+
+    it('Should type in the Filter by Category field and filter the todos by category',() =>{
+        page.navigateTo();
+        expect(page.filterByAndGetCategory('video games')).toContain('video games');
+    });
+
+
+    it('Should open a dialouge box to create a new user', () =>{
+        page.navigateTo();
+        element(by.id('addNewTodo')).click();
+        expect(element(by.id('addTodoTitle')).getText()).toContain('New Todo');
+    });
+
+    it('Should type in the information of a todo and add it',() =>{
+        page.navigateTo();
+        element(by.id('addNewTodo')).click();
+        page.addTodo('Eric', 'homework', 'this is only a test');
+        expect(page.filterByAndGetBody('this is only a test')).toContain('this is only a test');
+    });
+
+
 });

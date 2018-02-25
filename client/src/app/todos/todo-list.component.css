@@ -12,3 +12,27 @@
     padding-right: 14px;
 }
 
+body {
+    line-height: 1;
+    background-color: lightblue;
+}
+
+.accordion{
+    font-weight: bold;
+}
+
+.greenTodos, .redTodos{
+    font-weight: bold;
+}
+.greenTodos{
+    border-right: 10px solid green;
+}
+
+.redTodos{
+    border-right: 10px solid red;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}

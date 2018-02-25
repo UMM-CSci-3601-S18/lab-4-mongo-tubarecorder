@@ -4,68 +4,74 @@
     </ol>
 </div> -->
 
+<body>
+    <div layout-gt-sm="row">
+        <div flex-gt-sm="80" flex-offset-gt-sm="10">
+            <mat-card>
+                <mat-card-title id="todo-list-title">Todos</mat-card-title>
+                <mat-divider></mat-divider>
 
-<div layout-gt-sm="row">
-    <div flex-gt-sm="80" flex-offset-gt-sm="10">
-        <mat-card>
-            <mat-card-title id="todo-list-title">Todos</mat-card-title>
-            <mat-divider></mat-divider>
-            <mat-card-content>
-                <mat-form-field>
-                    <input matInput id="todoOwner" #input type="text" placeholder="Search by Owner" (input)="todoOwner = $event.target.value">
-                </mat-form-field>
-                <mat-form-field>
-                    <input matInput id="todoBody" #input type="text" placeholder="Search by Body" (input)="todoBody = $event.target.value">
-                </mat-form-field>
-                <button type="button" id="submitSearch" (click)="loadService()"> Search </button>
-                <br>
+                <mat-card-content>
+                    <h3>Search:</h3>
+                    <mat-form-field>
+                        <input matInput id="todoOwner" #input type="text" placeholder="Search by Owner" (input)="todoOwner = $event.target.value">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput id="todoBody" #input type="text" placeholder="Search by Body" (input)="todoBody = $event.target.value">
+                    </mat-form-field>
+                    <button type="button" id="submitSearch" (click)="loadService()"> Search </button>
+                    <mat-divider></mat-divider>
+                    <br>
 
-                Filter by Status:
-                <div>
-                    <input type="radio" id="statusAll"
-                           name="status" (input)="todoStatus = null">
-                    <label for="statusAll">All</label>
+                    <h3>Filter:</h3>
+                    Filter by Status:
+                    <div>
+                        <input type="radio" id="statusAll"
+                               name="status" (input)="todoStatus = null">
+                        <label for="statusAll">All</label>
 
-                    <input type="radio" id="statusComplete"
-                           name="status" (input)="todoStatus ='true'">
-                    <label for="statusComplete">Complete</label>
+                        <input type="radio" id="statusComplete"
+                               name="status" (input)="todoStatus ='true'">
+                        <label for="statusComplete">Complete</label>
 
-                    <input type="radio" id="statusIncomplete"
-                           name="status" (input)="todoStatus ='false'">
-                    <label for="statusIncomplete">Incomplete</label>
-                    <button type="button" id="submitStatus" (click)="loadService()">Submit</button>
-                </div>
-                <br>
-                <mat-form-field>
-                    <input matInput id="todoCategory" #input type="text" placeholder="Filter by Category" (input)="todoCategory = $event.target.value">
-                </mat-form-field>
+                        <input type="radio" id="statusIncomplete"
+                               name="status" (input)="todoStatus ='false'">
+                        <label for="statusIncomplete">Incomplete</label>
+                    </div>
+                    <br>
+                    <mat-form-field>
+                        <input matInput id="todoCategory" #input type="text" placeholder="Filter by Category" (input)="todoCategory = $event.target.value">
+                    </mat-form-field>
 
+                    <mat-divider></mat-divider>
+                        <br>
+                        <mat-accordion class="accordion" *ngIf="todos; else todosError" >
+                        <mat-expansion-panel #elem class="todos" #elem [id]="todo._id['$oid']" *ngFor="let todo of this.filterTodos(todoCategory, todoStatus)">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title  [ngClass]="{greenTodos: todo.status, redTodos: !todo.status}" matTooltip="Status: {{todo.status}}" >{{todo.owner}}: {{todo._id['$oid']}}</mat-panel-title>
+                            </mat-expansion-panel-header>
 
-                <mat-accordion *ngIf="todos; else todosError" >
-                <mat-expansion-panel #elem class="todos" #elem [id]="todo._id['$oid']" *ngFor="let todo of this.filterTodos(todoCategory, todoStatus)">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title  matTooltip="Status: {{todo.status}}" >{{todo.owner}}: {{todo._id['$oid']}}</mat-panel-title>
+                            <mat-panel-description class="owner">Owner: {{todo.owner}}</mat-panel-description>
+                            <mat-panel-description class="id">ID: {{todo._id['$oid']}}</mat-panel-description>
+                            <mat-panel-description class="status">Status: {{todo.status}}</mat-panel-description>
+                             <mat-panel-description class="categoryDisplay">Category: {{todo.category}}</mat-panel-description>
+                            <mat-panel-description class="bodyDisplay">Body: {{todo.body}}</mat-panel-description>
 
-                    </mat-expansion-panel-header>
-                    <mat-panel-description class="owner">Owner: {{todo.owner}}</mat-panel-description>
-                    <mat-panel-description class="id">ID: {{todo._id['$oid']}}</mat-panel-description>
-                    <mat-panel-description class="status">Status: {{todo.status}}</mat-panel-description>
-                     <mat-panel-description class="categoryDisplay">Category: {{todo.category}}</mat-panel-description>
-                    <mat-panel-description class="bodyDisplay">Body: {{todo.body}}</mat-panel-description>
+                        </mat-expansion-panel>
+                        </mat-accordion>
+                    <!-- Maybe this should be a pop-up instead of just a text message? Not sure. -->
+                    <ng-template #todosError>
+                        <mat-error>
+                            There was a problem loading the todos. Possibly the server is down or perhaps there are network
+                            issues.
+                        </mat-error>
+                        <mat-error>
+                            Please wait a bit and try again or start the server.
+                        </mat-error>
+                    </ng-template>
+                </mat-card-content>
 
-                </mat-expansion-panel>
-                </mat-accordion>
-                <!-- Maybe this should be a pop-up instead of just a text message? Not sure. -->
-                <ng-template #todosError>
-                    <mat-error>
-                        There was a problem loading the todos. Possibly the server is down or perhaps there are network
-                        issues.
-                    </mat-error>
-                    <mat-error>
-                        Please wait a bit and try again or start the server.
-                    </mat-error>
-                </ng-template>
-            </mat-card-content>
-        </mat-card>
+            </mat-card>
+        </div>
     </div>
-</div>
+</body>

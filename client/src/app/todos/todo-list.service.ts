@@ -49,7 +49,6 @@ export class TodoListService {
             }),
         };
 
-        // Send post request to add a new user with the user data as the body with specified headers.
         return this.http.post<{'$oid': string}>(this.todoUrl + '/new', newTodo, httpOptions);
     }
 

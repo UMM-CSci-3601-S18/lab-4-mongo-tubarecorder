@@ -70,75 +70,33 @@ public class TodoController {
         filterDoc = filterDoc.append("status", true);
 
         List<Document> summary = new ArrayList<>();
-        Document categoriesSummary = null;
-        Document ownersSummary = null;
 
         // overall todos complete
         float TodosComplete = todoCollection.count(filterDoc);
         float TodosTotal = todoCollection.count();
-        summary.add(Document.parse("{ percentTodosComplete: " + (TodosComplete/TodosTotal) + "}"));
-        //summary.add(Document.parse("{\n" +
-        //    "                    percentTodosComplete:" + percentToDosComplete + "}"));
-
+        summary.add(Document.parse("{ percentTodosComplete:" + ((TodosComplete/TodosTotal)*100) + "}"));
 
         // todos complete by owner and category
-        //ownersSummary = percentComplete("owner");
-        //categoriesSummary = percentComplete("category");
-
-/*
-        DistinctIterable<Document> ownerNames = todoCollection.distinct("owner",Document.class);
-
-        String ownerName;
-        float ownerPercent;
-        float ownerTotal;
-        float ownerComplete;
-        for(Document ownerDoc : ownerNames){
-            filterDoc = new Document();
-            ownerName = ownerDoc.get("owner").toString();
-            filterDoc.append("owner", ownerName);
-
-            ownerTotal = todoCollection.count(filterDoc);
-
-            filterDoc.append("status", true);
-            ownerComplete = todoCollection.count(filterDoc);
-
-            ownerPercent = ownerComplete/ownerTotal;
-
-            ownersSummary.put(ownerName, ownerPercent);
-        }
-        */
-
-        /*
-        List<Document> testTodos = new ArrayList<>();
-
-        testTodos.add(Document.parse("{\n" +
-            "                    owner: \"Chris\",\n" +
-            "                    status: false,\n" +
-            "                    category: \"homework\",\n" +
-            "                    body: \"add an underscore to make that error you had for a whole day go away\"\n" +
-            "                }"));
-            */
-
-        //summary.append("categoriesPercentComplete", categoriesSummary);
-        //summary.append("ownersPercentComplete", ownersSummary);
+        summary.add(Document.parse("{ categoriesPercentComplete : " + percentComplete("category") + "}"));
+        summary.add(Document.parse("{ ownersPercentComplete : " + percentComplete("owner") + "}"));
 
 
         return JSON.serialize(summary);
         //return summary.toJson();
     }
 
-    public Document percentComplete(String fieldName){
-        Document returnSummary = null;
+    public String percentComplete(String fieldName){
+        String returnSummary = "{ ";
         Document filterDoc = new Document();
-        DistinctIterable<String> Names = todoCollection.distinct(fieldName,String.class);
+        DistinctIterable<String> DINames = todoCollection.distinct(fieldName,String.class);
+        Iterator<String> Names = DINames.iterator();
 
         String Name;
-        float Percent;
         float Total;
         float Complete;
-        for(String Doc : Names){
+        while (Names.hasNext()){
             filterDoc = new Document();
-            Name = "Fry";
+            Name = Names.next();
             filterDoc.append(fieldName, Name);
 
             Total = todoCollection.count(filterDoc);
@@ -146,10 +104,16 @@ public class TodoController {
             filterDoc.append("status", true);
             Complete = todoCollection.count(filterDoc);
 
-            Percent = Complete/Total;
+            returnSummary = returnSummary + "\"" + Name + "\"" + ": " + ((Complete/Total)*100);
 
-            returnSummary.put(Name, Percent);
+            if(Names.hasNext()){
+                returnSummary = returnSummary + ", ";
+            }
+
         }
+
+        returnSummary = returnSummary + "}";
+        //System.out.println(returnSummary);
 
         return returnSummary;
     }

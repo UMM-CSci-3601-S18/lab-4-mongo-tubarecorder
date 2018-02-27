@@ -1,3 +1,4 @@
+/*
 import {UserPage} from './user-list.po';
 import {browser, protractor, element, by} from 'protractor';
 import {Key} from 'selenium-webdriver';
@@ -46,7 +47,63 @@ describe('User list', () => {
             page.selectUpKey();
         }
 
-        expect(page.getUniqueUser('stokesclayton@momentia.com')).toEqual('Stokes Clayton');
+        expect(page.beforeEach(() => {
+        // stub TodoService for test purposes
+        todoListServiceStub = {
+            getTodoById: (todoId: string) => Observable.of([
+                {
+                    _id: 'chris_id',
+                    name: 'Chris',
+                    age: 25,
+                    company: 'UMM',
+                    email: 'chris@this.that'
+                },
+                {
+                    _id: 'pat_id',
+                    name: 'Pat',
+                    age: 37,
+                    company: 'IBM',
+                    email: 'pat@something.com'
+                },
+                {
+                    _id: 'jamie_id',
+                    name: 'Jamie',
+                    age: 37,
+                    company: 'Frogs, Inc.',
+                    email: 'jamie@frogs.com'
+                }
+            ].find(todo => todo._id === todoId))
+        };
+
+        TestBed.configureTestingModule({
+            declarations: [TodoComponent],
+            providers: [{provide: TodoListService, useValue: todoListServiceStub}]
+        });
+    });
+
+    beforeEach(async(() => {
+        TestBed.compileComponents().then(() => {
+            fixture = TestBed.createComponent(TodoComponent);
+            todoComponent = fixture.componentInstance;
+        });
+    }));
+
+    it('can retrieve Pat by ID', () => {
+        todoComponent.setId('pat_id');
+        expect(todoComponent.todo).toBeDefined();
+        expect(todoComponent.todo.name).toBe('Pat');
+        expect(todoComponent.todo.email).toBe('pat@something.com');
+    });
+
+    it('returns undefined for Santa', () => {
+        todoComponent.setId('Santa');
+        expect(todoComponent.todo).not.toBeDefined();
+    });
+
+});
+
+
+getUniqueUser('stokesclayton@momentia.com')).toEqual('Stokes Clayton');
 
         expect(page.getUniqueUser('merrillparker@escenta.com')).toEqual('Merrill Parker');
     });
@@ -160,3 +217,4 @@ describe('User list', () => {
         element(by.id('exitWithoutAddingButton')).click();
     });
 });
+*/

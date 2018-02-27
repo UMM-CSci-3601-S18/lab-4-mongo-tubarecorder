@@ -1,4 +1,4 @@
-#addUser {
+#addNewTodo {
     flex-basis: 100%;
     max-width: 100%;
 }
@@ -23,7 +23,7 @@ body {
 }
 
 .greenTodos, .redTodos{
-    font-family: Cursive;
+    font-family: cursive;
 
 }
 .greenTodos{

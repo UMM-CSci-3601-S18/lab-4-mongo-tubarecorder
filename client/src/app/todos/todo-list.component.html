@@ -1,20 +1,21 @@
 <body>
     <div layout-gt-sm="row">
         <div flex-gt-sm="80" flex-offset-gt-sm="10">
-            <mat-card>
-                <mat-card-title id="todo-list-title">Todos</mat-card-title>
-                <mat-divider></mat-divider>
-
-                <div>
-                    <ol>
-                        <button id = "addNewTodo" mat-raised-button (click)="openDialog()">Add A New Todo</button>
-                    </ol>
-                </div>
-
+            <mat-card class=mainMatCard>
+                <mat-card-title class=title id="todo-list-title">Toodle: The Worlds Fastest Todo Database (Possibly)</mat-card-title>
                 <mat-divider></mat-divider>
 
                 <mat-card-content>
-                    <h3>Search:</h3>
+                    <div class=addTodo>
+                        <ol>
+                            <button id = "addNewTodo" mat-raised-button (click)="openDialog()">Add A New Todo</button>
+                        </ol>
+                    </div>
+
+                    <mat-divider></mat-divider>
+
+
+                    <h3 class=title>Search:</h3>
                     <mat-form-field>
                         <input matInput id="todoOwner" #input type="text" placeholder="Search by Owner" (input)="todoOwner = $event.target.value">
                     </mat-form-field>
@@ -25,11 +26,10 @@
                     <mat-divider></mat-divider>
                     <br>
 
-                    <h3>Filter:</h3>
-                    Filter by Status:
+                    <h3 class=title>Filter:</h3>
 
                     <div *ngIf="isUsingChrome; else elseStatusFilter">
-                        <br>
+
                         Please use FireFox for neater filtering functionality.
                         <br>
                         Otherwise, type "true" to find complete todos, or "false" to find incomplete todos.
@@ -40,6 +40,7 @@
                         </mat-form-field>
                     </div>
                     <ng-template #elseStatusFilter>
+                        Filter by Status:
                         <div>
                             <input type="radio" id="statusAll"
                                    name="status" (input)="todoStatus = null;" (click)="detectChrome()">
@@ -66,14 +67,19 @@
                         <mat-accordion class="accordion" *ngIf="todos; else todosError" >
                         <mat-expansion-panel #elem class="todos" #elem [id]="todo._id['$oid']" *ngFor="let todo of this.filterTodos(todoCategory, todoStatus)">
                             <mat-expansion-panel-header>
-                                <mat-panel-title  [ngClass]="{greenTodos: todo.status, redTodos: !todo.status}" matTooltip="Status: {{todo.status}}" >{{todo.owner}}: {{todo._id['$oid']}}</mat-panel-title>
+                                <mat-panel-title  [ngClass]="{greenTodos: todo.status, redTodos: !todo.status}" matTooltip="Category: {{todo.category}}" >{{todo.owner}}: {{todo._id['$oid']}}</mat-panel-title>
                             </mat-expansion-panel-header>
 
+                            <br>
                             <mat-panel-description class="owner">Owner: {{todo.owner}}</mat-panel-description>
+                            <br>
                             <mat-panel-description class="id">ID: {{todo._id['$oid']}}</mat-panel-description>
+                            <br>
                             <mat-panel-description class="status">Status: {{todo.status}}</mat-panel-description>
-                             <mat-panel-description class="categoryDisplay">Category: {{todo.category}}</mat-panel-description>
-                            <mat-panel-description class="bodyDisplay">Body: {{todo.body}}</mat-panel-description>
+                            <br>
+                            <mat-panel-description class="categoryDisplay">Category: {{todo.category}}</mat-panel-description>
+                            <br>
+                            <mat-panel-description class="bodyDisplay">{{todo.body}}</mat-panel-description>
 
                         </mat-expansion-panel>
                         </mat-accordion>

@@ -1,4 +1,4 @@
-#addUser {
+#addNewTodo {
     flex-basis: 100%;
     max-width: 100%;
 }
@@ -12,27 +12,45 @@
     padding-right: 14px;
 }
 
+.title{
+    font-family: Cursive;
+}
+
 body {
     line-height: 1;
+    font-family: Cursive;
     background-color: lightblue;
 }
 
-.accordion{
-    font-weight: bold;
-}
-
 .greenTodos, .redTodos{
-    font-weight: bold;
+    font-family: cursive;
+
 }
 .greenTodos{
     border-right: 10px solid green;
+    font-weight: normal;
 }
 
 .redTodos{
+    font-weight: bold;
     border-right: 10px solid red;
 }
 
 table {
     border-collapse: collapse;
     border-spacing: 0;
+}
+
+.mainMatCard {
+    text-align:center;
+}
+
+mat-expansion-panel-header, mat-panel-description {
+    font-weight: bold;
+    -webkit-box-shadow: 0 8px 10px -6px black
+}
+
+fineprint {
+    font-weight: normal;
+    font-size: .5px;
 }

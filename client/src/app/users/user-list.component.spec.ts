@@ -1,3 +1,4 @@
+/*
 import {ComponentFixture, TestBed, async} from '@angular/core/testing';
 import {User} from './user';
 import {UserListComponent} from './user-list.component';
@@ -222,3 +223,4 @@ describe('Adding a user', () => {
         expect(calledUser).toEqual(newUser);
     });
 });
+*/

@@ -27,22 +27,35 @@
 
                     <h3>Filter:</h3>
                     Filter by Status:
-                    <div>
-                        <input type="radio" id="statusAll"
-                               name="status" (input)="todoStatus = null;" (click)="detectChrome()">
-                        <label for="statusAll">All</label>
 
-                        <input type="radio" id="statusComplete"
-                               name="status" (input)="todoStatus ='true'" (click)="detectChrome()">
-                        <label for="statusComplete">Complete</label>
+                    <div *ngIf="isUsingChrome; else elseStatusFilter">
+                        <br>
+                        Please use FireFox for neater filtering functionality.
+                        <br>
+                        Otherwise, type "true" to find complete todos, or "false" to find incomplete todos.
 
-                        <input type="radio" id="statusIncomplete"
-                               name="status" (input)="todoStatus ='false'" (click)="detectChrome()">
-                        <label for="statusIncomplete">Incomplete</label>
-                        <!-- Filter by status doesn't work on Chrome for some reason -->
-                        <!-- <button type="button" id="submitStatusFilter" (click)="loadService()"> Filter by Status </button> -->
+                        <br>
+                        <mat-form-field>
+                            <input matInput id="todoStatusAlt" #input type="text" placeholder="Filter by Status" (input)="todoStatus = $event.target.value">
+                        </mat-form-field>
                     </div>
+                    <ng-template #elseStatusFilter>
+                        <div>
+                            <input type="radio" id="statusAll"
+                                   name="status" (input)="todoStatus = null;" (click)="detectChrome()">
+                            <label for="statusAll">All</label>
 
+                            <input type="radio" id="statusComplete"
+                                   name="status" (input)="todoStatus ='true'" (click)="detectChrome()">
+                            <label for="statusComplete">Complete</label>
+
+                            <input type="radio" id="statusIncomplete"
+                                   name="status" (input)="todoStatus ='false'" (click)="detectChrome()">
+                            <label for="statusIncomplete">Incomplete</label>
+                            <!-- Filter by status doesn't work on Chrome for some reason -->
+                            <!-- <button type="button" id="submitStatusFilter" (click)="loadService()"> Filter by Status </button> -->
+                        </div>
+                    </ng-template>
                     <br>
                     <mat-form-field>
                         <input matInput id="todoCategory" #input type="text" placeholder="Filter by Category" (input)="todoCategory = $event.target.value">

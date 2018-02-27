@@ -21,6 +21,7 @@ export class TodoListComponent implements OnInit {
     public todoOwner : string = "";
     public todoBody : string = "";
     public todoID : string;
+    public isUsingChrome : boolean = false;
 
     public loadReady: boolean = false;
 
@@ -125,14 +126,15 @@ export class TodoListComponent implements OnInit {
     ngOnInit(): void {
         this.refreshTodos();
         this.loadService();
+        this.detectChrome();
     }
 
     detectChrome(): void {
-        console.log("the function works");
         if(navigator.userAgent.indexOf("Chrome") != -1 )
         {
             alert('Warning, it appears you are using Google Chrome. Some filtering features will be unavailable. Please use FireFox for full functionality.');
             console.log("chrome detected");
+            this.isUsingChrome=true;
         }
     }
 }

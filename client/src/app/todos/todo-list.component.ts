@@ -52,6 +52,9 @@ export class TodoListComponent implements OnInit {
         if (searchStatus != null) {
 
             this.filteredTodos = this.filteredTodos.filter(todo => {
+                if (searchStatus === ""){
+                    return true;
+                }
                 if (todo.status) {
                     return searchStatus === "true";
                 } else if (!todo.status) {

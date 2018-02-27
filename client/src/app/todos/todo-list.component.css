@@ -22,19 +22,17 @@ body {
     background-color: lightblue;
 }
 
-.accordion{
-    font-weight: bold;
-}
-
 .greenTodos, .redTodos{
     font-family: Cursive;
-    font-weight: bold;
+
 }
 .greenTodos{
     border-right: 10px solid green;
+    font-weight: normal;
 }
 
 .redTodos{
+    font-weight: bold;
     border-right: 10px solid red;
 }
 
@@ -50,4 +48,9 @@ table {
 mat-expansion-panel-header, mat-panel-description {
     font-weight: bold;
     -webkit-box-shadow: 0 8px 10px -6px black
+}
+
+fineprint {
+    font-weight: normal;
+    font-size: .5px;
 }

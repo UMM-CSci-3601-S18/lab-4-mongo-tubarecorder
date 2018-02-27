@@ -51,9 +51,10 @@ export class TodoPage{
         return result;
     }
 
-    filterByAndGetStatusComplete() {
-        let input = element(by.id('statusComplete'));
+    filterByAndGetStatus(status: string) {
+        let input = element(by.id('todoStatusAlt'));
         input.click();
+        input.sendKeys(status);
 
         let el = element.all(by.css('.status')).first();
         let container = element.all(by.css('.todos')).first();

@@ -132,12 +132,16 @@ export class TodoListComponent implements OnInit {
         this.detectChrome();
     }
 
+    // This checks if the user is using Chrome and warns them that filtering doesn't work as intended on Chrome
+    // However, having the dialogue box pop up every time the page is loaded breaks a bunch of tests
+    // So I'm going to comment out the warning dialogue box so that tests can run properly
     detectChrome(): void {
         if(navigator.userAgent.indexOf("Chrome") != -1 )
         {
-            alert('Warning, it appears you are using Google Chrome. Some filtering features will be unavailable. Please use FireFox for full functionality.');
+            //alert('Warning, it appears you are using Google Chrome. Some filtering features will be unavailable. Please use FireFox for full functionality.');
             console.log("chrome detected");
             this.isUsingChrome=true;
         }
     }
+
 }

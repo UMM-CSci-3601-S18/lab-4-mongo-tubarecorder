@@ -126,4 +126,13 @@ export class TodoListComponent implements OnInit {
         this.refreshTodos();
         this.loadService();
     }
+
+    detectChrome(): void {
+        console.log("the function works");
+        if(navigator.userAgent.indexOf("Chrome") != -1 )
+        {
+            alert('Warning, it appears you are using Google Chrome. Some filtering features will be unavailable. Please use FireFox for full functionality.');
+            console.log("chrome detected");
+        }
+    }
 }

@@ -1,5 +1,4 @@
 <body>
-
     <div layout-gt-sm="row">
         <div flex-gt-sm="80" flex-offset-gt-sm="10">
             <mat-card>
@@ -30,18 +29,18 @@
                     Filter by Status:
                     <div>
                         <input type="radio" id="statusAll"
-                               name="status" (input)="todoStatus = null">
+                               name="status" (input)="todoStatus = null;" (click)="detectChrome()">
                         <label for="statusAll">All</label>
 
                         <input type="radio" id="statusComplete"
-                               name="status" (input)="todoStatus ='true'">
+                               name="status" (input)="todoStatus ='true'" (click)="detectChrome()">
                         <label for="statusComplete">Complete</label>
 
                         <input type="radio" id="statusIncomplete"
-                               name="status" (input)="todoStatus ='false'">
+                               name="status" (input)="todoStatus ='false'" (click)="detectChrome()">
                         <label for="statusIncomplete">Incomplete</label>
                         <!-- Filter by status doesn't work on Chrome for some reason -->
-                        <button type="button" id="submitStatusFilter" (click)="loadService()"> Filter by Status </button>
+                        <!-- <button type="button" id="submitStatusFilter" (click)="loadService()"> Filter by Status </button> -->
                     </div>
 
                     <br>
